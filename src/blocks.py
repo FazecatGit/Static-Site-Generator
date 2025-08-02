@@ -148,3 +148,23 @@ def quote_to_html_node(block):
     content = " ".join(new_lines)
     children = text_to_children(content)
     return ParentNode("blockquote", children)
+
+def extract_title(markdown):
+    lines = markdown.split("\n")
+    for line in lines:
+        if line.startswith("# "):
+            return line[2:]
+        if line != line.startswith("#"):
+            raise Exception("Title must be the first line of the markdown")
+    
+def parse_text_with_links(text):
+    text_nodes = text_to_textnode(text)
+    children = []
+    for text_node in text_nodes:
+        html_node = text_node_to_html_node(text_node)
+        children.append(html_node)
+    return ParentNode("p", children) if children else None
+
+if __name__ == "__main__":
+    out = text_to_textnode("Tolkien Fan Club")
+    print("FINAL RESULT:", out)

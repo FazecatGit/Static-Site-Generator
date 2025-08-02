@@ -1,12 +1,12 @@
 
 import unittest
 from blocks import (
+    BlockType,
     markdown_to_html_node,
     markdown_to_blocks,
     block_to_block_type,
-    BlockType,
+    extract_title
 )
-
 
 class TestMarkdownToHTML(unittest.TestCase):
     def test_markdown_to_blocks(self):
@@ -165,5 +165,9 @@ the **same** even with inline stuff
         )
 
 
+def test_extract_title(self):
+    md = "# This is a title\n\nSome content here."
+    self.assertEqual(extract_title(md), "This is a title")
+    
 if __name__ == "__main__":
     unittest.main()
