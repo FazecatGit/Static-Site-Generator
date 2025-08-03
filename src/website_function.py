@@ -40,9 +40,8 @@ def generate_page(from_path, template_path, dest_path, basepath="/"):
     html_content = template.replace("{{ Content }}", html_content)
     html_content = html_content.replace("{{ Title }}", extracted_title)
 
-    html_content = html_content.replace('href="/"', f'href="{basepath}"') 
-    html_content = html_content.replace('src="/"', f'src="{basepath}"') 
-
+    html_content = html_content.replace('href="/', f'href="{basepath}')
+    html_content = html_content.replace('src="/', f'src="{basepath}')
     # Ensure the destination directory exists
 
     dest_dir_path = os.path.dirname(dest_path)
@@ -58,9 +57,9 @@ def generate_page_recursive(dir_path_content, template_path, dest_dir_path, base
         if os.path.isfile(item_path):
             if item.endswith('.md'):
                 dest_path = os.path.join(dest_dir_path, item.replace('.md', '.html'))
-                generate_page(item_path, template_path, dest_path)
+                generate_page(item_path, template_path, dest_path, basepath=basepath)
         elif os.path.isdir(item_path):
             new_dest_dir = os.path.join(dest_dir_path, item)
-            generate_page_recursive(item_path, template_path, new_dest_dir)
+            generate_page(item_path, template_path, dest_path, basepath=basepath)
 
         

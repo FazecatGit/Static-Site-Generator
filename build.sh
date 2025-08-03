@@ -1,1 +1,1 @@
-python3 src/main.py "/FazecatGit.github.io/"
+python3 src/main.py "/Static-Site-Generator/"
