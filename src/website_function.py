@@ -23,9 +23,10 @@ def recursive_copy(src_path, dst_path):
         elif os.path.isdir(src_item_path):
             recursive_copy(src_item_path, dst_item_path)
 
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path, template_path, dest_path, basepath="/"):
     print(f"Generating page from {from_path} using template {template_path} to {dest_path}")
     
+
     with open(from_path, 'r') as f:
         content = f.read()
 
@@ -39,6 +40,11 @@ def generate_page(from_path, template_path, dest_path):
     html_content = template.replace("{{ Content }}", html_content)
     html_content = html_content.replace("{{ Title }}", extracted_title)
 
+    html_content = html_content.replace('href="/"', f'href="{basepath}"') 
+    html_content = html_content.replace('src="/"', f'src="{basepath}"') 
+
+    # Ensure the destination directory exists
+
     dest_dir_path = os.path.dirname(dest_path)
     if not os.path.exists(dest_dir_path):
         os.makedirs(dest_dir_path)
@@ -46,7 +52,7 @@ def generate_page(from_path, template_path, dest_path):
     with open(dest_path, 'w') as f:
         f.write(html_content)
 
-def generate_page_recursive(dir_path_content, template_path, dest_dir_path):
+def generate_page_recursive(dir_path_content, template_path, dest_dir_path, basepath="/"):
     for item in os.listdir(dir_path_content):
         item_path = os.path.join(dir_path_content, item)
         if os.path.isfile(item_path):
