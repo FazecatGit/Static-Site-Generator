@@ -42,8 +42,6 @@ def generate_page(from_path, template_path, dest_path):
     dest_dir_path = os.path.dirname(dest_path)
     if not os.path.exists(dest_dir_path):
         os.makedirs(dest_dir_path)
-    to_file = open(dest_path, 'w')
-    to_file.write(template)
 
     with open(dest_path, 'w') as f:
         f.write(html_content)
