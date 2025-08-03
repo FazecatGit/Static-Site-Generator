@@ -39,5 +39,24 @@ def generate_page(from_path, template_path, dest_path):
     html_content = template.replace("{{ Content }}", html_content)
     html_content = html_content.replace("{{ Title }}", extracted_title)
 
+    dest_dir_path = os.path.dirname(dest_path)
+    if not os.path.exists(dest_dir_path):
+        os.makedirs(dest_dir_path)
+    to_file = open(dest_path, 'w')
+    to_file.write(template)
+
     with open(dest_path, 'w') as f:
         f.write(html_content)
+
+def generate_page_recursive(dir_path_content, template_path, dest_dir_path):
+    for item in os.listdir(dir_path_content):
+        item_path = os.path.join(dir_path_content, item)
+        if os.path.isfile(item_path):
+            if item.endswith('.md'):
+                dest_path = os.path.join(dest_dir_path, item.replace('.md', '.html'))
+                generate_page(item_path, template_path, dest_path)
+        elif os.path.isdir(item_path):
+            new_dest_dir = os.path.join(dest_dir_path, item)
+            generate_page_recursive(item_path, template_path, new_dest_dir)
+
+        
