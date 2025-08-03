@@ -7,6 +7,7 @@ import shutil
 
 def main():
     basepath = sys.argv[1] if len(sys.argv) > 1 else "/"
+    print("BASEPATH:", basepath)
     delete_content_directory("docs")
     recursive_copy("static", "docs")
     generate_page_recursive("content", "template.html", "docs", basepath=basepath)

@@ -60,6 +60,6 @@ def generate_page_recursive(dir_path_content, template_path, dest_dir_path, base
                 generate_page(item_path, template_path, dest_path, basepath=basepath)
         elif os.path.isdir(item_path):
             new_dest_dir = os.path.join(dest_dir_path, item)
-            generate_page(item_path, template_path, dest_path, basepath=basepath)
+            generate_page_recursive(item_path, template_path, new_dest_dir, basepath=basepath)
 
         
